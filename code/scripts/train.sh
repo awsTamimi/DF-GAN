@@ -1,3 +1,4 @@
+
 # configs of different datasets
 cfg=$1
 
@@ -17,8 +18,8 @@ multi_gpus=True
 nodes=1
 master_port=11111
 
-# You can set CUDA_VISIBLE_DEVICES=0,1,2... to accelerate the training process if you have multiple GPUs
-CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --nproc_per_node=$nodes --master_port $master_port src/train.py \
+# Use torchrun for distributed training
+torchrun --nproc_per_node=$nodes --master_port $master_port src/train.py \
                     --stamp $stamp \
                     --cfg $cfg \
                     --batch_size $batch_size_per_gpu \
@@ -29,3 +30,4 @@ CUDA_VISIBLE_DEVICES=0 python -m torch.distributed.launch --nproc_per_node=$node
                     --train $train \
                     --multi_gpus $multi_gpus \
 
+#read -p "Press Enter to exit..."
